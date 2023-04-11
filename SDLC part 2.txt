@@ -1,0 +1,49 @@
+
+import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+/**
+ * @authod MakaylaHogg
+ */
+public class Main {
+    public static void main(String[] args) throws IOException
+        /**
+         * @param args
+         * the purpose of this file is to count the word occurrences from the given txt file
+        * Add file path to allow code the ability to locate the txt file within the users drive
+        */
+         {
+        String filePath = "/Users/makaylahogg/Documents/TheRaven.txt";
+        Map<String, Integer> hashMap = new HashMap<>();
+        /**
+         *  Allows the ability to read the input from the code source
+         * @param TheRaven.txt
+        */
+        String[] words = filePath.split(" ");
+        Scanner sc = new Scanner(new File(filePath));
+        StringBuffer buffer = new StringBuffer();
+        while (sc.hasNextLine()) {
+            buffer.append(sc.nextLine()+System.lineSeparator());
+        }
+        /**
+         * @return word count
+         * creates an output of the files contents and word count from the txt file
+         */
+        String fileContents = buffer.toString();
+        System.out.println("Words in the file: "+fileContents);
+        for (String word : words) {
+            Integer integer = hashMap.get(word);
+            if (integer == null)
+                hashMap.put(word, 1);
+            else {
+                hashMap.put(word, integer + 1);
+            }
+        }
+        System.out.println(hashMap);
+    }
+}
