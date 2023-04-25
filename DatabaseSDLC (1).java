@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class GUISDLC {
     public static void main(String[] args) throws FileNotFoundException {
-// Initialize the GUI frame and panel
+// Start the GUI frame and panel
         JFrame frame = new JFrame("Word Occurrence");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 500);
@@ -33,7 +33,6 @@ public class GUISDLC {
         c.gridwidth = 2;
         panel.add(scrollPane, c);
 
-        // Add action listener to the "Choose File" button
         chooseFileButton.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
             FileNameExtensionFilter filter = new FileNameExtensionFilter("Text files", "txt");
@@ -43,7 +42,7 @@ public class GUISDLC {
                 File file = fileChooser.getSelectedFile();
                 Map<String, Integer> wordCounts = countWords(file);
 
-                // Connect to the database and insert new words into the "word" table
+                // Connect to the database
                 try {
                     Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/wordOccurrences", "user", "Password1");
                     for (Map.Entry<String, Integer> entry : wordCounts.entrySet()) {
@@ -58,7 +57,6 @@ public class GUISDLC {
                     System.out.println("Error: " + ex.getMessage());
                 }
 
-                // Output the word occurrences to the GUI text area
                 outputArea.setText("");
                 for (Map.Entry<String, Integer> entry : wordCounts.entrySet()) {
                     outputArea.append(entry.getKey() + ": " + entry.getValue() + "\n");
@@ -66,12 +64,10 @@ public class GUISDLC {
             }
         });
 
-        // Add the GUI panel to the frame and display the frame
         frame.add(panel);
         frame.setVisible(true);
     }
 
-    // Helper method to count the occurrences of each word in the file
     private static Map<String, Integer> countWords(File file) throws FileNotFoundException {
         Map<String, Integer> hashMap = new HashMap<>();
         Scanner sc = new Scanner(file);
